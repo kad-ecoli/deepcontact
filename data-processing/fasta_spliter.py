@@ -8,7 +8,7 @@
 import re
 
 import config_parser
-import util
+import util_zcx as util
 import os
 from Bio import SeqIO
 

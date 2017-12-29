@@ -10,7 +10,7 @@ import yaml
 
 import sys
 import config_parser
-import fasta_spliter
+#import fasta_spliter
 import hhblits_runner
 import ccmpred_runner
 import freecontact_runner
@@ -18,7 +18,7 @@ import alnstats_runner
 import ss_runner
 import jackhmmer_runner
 import hhmake_runner
-import util
+import util_zcx as util
 
 if __name__ == '__main__':
     default_config = sys.argv[1]
