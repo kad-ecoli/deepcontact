@@ -1,4 +1,13 @@
 #!/usr/bin/env python
+docstring='''
+./deepcontact/main.py ./tmp_pickle/feature.pkl ./tmp_output/prediction.pkl
+    use ./tmp_pickle/feature.pkl as input feature, generate python pickle
+    format contact prediction ./tmp_output/prediction.pkl
+
+./deepcontact/main.py ./tmp_pickle/feature.pkl ./tmp_output/prediction.deepcontact
+    use ./tmp_pickle/feature.pkl as input feature, generate gremlin
+    format contact prediction ./tmp_output/prediction.deepcontact
+'''
 #################################################################################
 #     File Name           :     main.py
 #     Created By          :     yang
@@ -9,7 +18,7 @@
 from model import Model
 import theano.tensor as T
 import theano, lasagne, numpy as np
-import cPickle, sys
+import cPickle, sys, os
 
 def load_model(output_layer, model_file = "./deepcontact/models/model.npz"):
     with np.load(model_file) as f:
@@ -31,15 +40,22 @@ def main(feature_2d = None, feature_1d = None, output_filename = None, feature_p
     network = m.build_model(feature2d, feature1d)
     output = lasagne.layers.get_output(network, deterministic = True)
     pred_fn = theano.function([feature2d, feature1d], output, updates = None)
-    load_model(output_layer = network)
+    load_model(output_layer = network, model_file=os.path.abspath(
+        os.path.join(os.path.dirname(__file__),"models/model.npz")))
     prediction = pred_fn([feature2d_value], [feature1d_value])[0][0][:protein_length, : protein_length]
     if output_filename is None:
         output_filename = './tmp_output/prediction.pkl'
 
-    with open(output_filename, "wb") as fout:
-        cPickle.dump(prediction, fout)
+    if output_filename.endswith(".pkl"):
+        with open(output_filename, "wb") as fout:
+            cPickle.dump(prediction, fout)
+    else:
+        np.savetxt(output_filename, prediction, delimiter='\t')
 
 if __name__=="__main__":
+    if len(sys.argv)<=2:
+        sys.stderr.write(docstring)
+        exit()
     feature_pickle_filename = sys.argv[1]
     output_filename = sys.argv[2]
     main(feature_pickle_filename = feature_pickle_filename, output_filename = output_filename)
