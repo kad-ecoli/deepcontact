@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 #################################################################################
 #     File Name           :     feature_gen.py
 #     Created By          :     yang
@@ -7,7 +7,7 @@
 #     Description         :      
 #################################################################################
 import yaml, h5py, os, sys
-from deepcontact.feature_parser import *
+from feature_parser import *
 import cPickle
 DTYPE = 'float32'
 

@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 #################################################################################
 #     File Name           :     main.py
 #     Created By          :     yang
@@ -6,7 +6,7 @@
 #     Last Modified       :     [2017-11-16 02:18]
 #     Description         :      
 #################################################################################
-from deepcontact.model import Model
+from model import Model
 import theano.tensor as T
 import theano, lasagne, numpy as np
 import cPickle, sys

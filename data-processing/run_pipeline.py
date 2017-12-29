@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #################################################################################
 #     File Name           :     run_pipeline.py
 #     Created By          :     Qing Ye

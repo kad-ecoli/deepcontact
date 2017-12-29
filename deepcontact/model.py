@@ -8,7 +8,7 @@
 #################################################################################
 
 import lasagne
-from deepcontact.layers import Feature2dBiasLayer, FeatureCombineLayer, LinearLayer
+from layers import Feature2dBiasLayer, FeatureCombineLayer, LinearLayer
 
 def stack_conv2D_layer(incoming, filter_size, filter_number):
     '''
