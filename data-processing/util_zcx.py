@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import subprocess
-import os
+import sys, os
 
 def run_command(args, log_file=None):
     ''' use subprocess (instead of subprocess32) to run system
@@ -8,7 +8,7 @@ def run_command(args, log_file=None):
     '''
     cmd=' '.join(args)
     if log_file:
-        p=subprocess.Popen(cmd,shell=True,stdout=subprocess.stdout)
+        p=subprocess.Popen(cmd,shell=True,stdout=subprocess.PIPE)
     else:
         p=subprocess.Popen(cmd,shell=True)
     sys.stdout.write(cmd+('' if not log_file else '>'+log_file)+'\n')

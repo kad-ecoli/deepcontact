@@ -1,4 +1,13 @@
 #!/usr/bin/env python
+docstring='''
+data-processing/run_pipeline.py default.yaml test.fasta ./tmp_feature
+    use default.yaml as configuration file and test.fasta as input
+    sequence to generate input files under ./tmp_feature
+
+data-processing/run_pipeline.py test.fasta ./tmp_feature
+    use data-processing/default.py as configuration file and test.fasta as input
+    sequence to generate input files under ./tmp_feature
+'''
 #################################################################################
 #     File Name           :     run_pipeline.py
 #     Created By          :     Qing Ye
@@ -6,10 +15,9 @@
 #     Last Modified       :     [2017-11-15 17:09]
 #     Description         :      
 #################################################################################
-import yaml
+#import yaml
 
 import sys
-import config_parser
 #import fasta_spliter
 import hhblits_runner
 import ccmpred_runner
@@ -19,17 +27,28 @@ import ss_runner
 import jackhmmer_runner
 import hhmake_runner
 import util_zcx as util
+import default
 
 if __name__ == '__main__':
-    default_config = sys.argv[1]
-    input_sequence = sys.argv[2]
-    output_dir = sys.argv[3]
+    if len(sys.argv)<3:
+        sys.stderr.write(docstring)
+        exit()
 
-    config = config_parser.parse(default_config, input_sequence, output_dir)
+    input_sequence = sys.argv[-2]
+    output_dir = sys.argv[-1]
+
+    if len(sys.argv)==4:
+        default_config = sys.argv[1]
+        import config_parser
+        config = config_parser.parse(default_config, input_sequence, output_dir)
+    else:
+        config = default.parse(default.default_config, input_sequence, output_dir)
+
+    default.set_HHLIB(config)
 
     print "=" * 60
     print "Running Pipeline with the following configuration"
-    print yaml.dump(config)
+    print config
 
     util.make_dir_if_not_exist(config['path']['output'])
 

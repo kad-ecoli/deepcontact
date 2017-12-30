@@ -36,7 +36,7 @@ class SSRunner:
                 '-b', '0',
                 '-j', str(blast_config['n_iters']),
                 '-h', str(blast_config['e_value']),
-                '-d', 'nr',
+                '-d', str(blast_config['database']),
                 '-i', fasta_file,
                 '-C', output_name]
         util.run_command(args, log_name)
