@@ -4,6 +4,11 @@ docstring='''
     Generate features listed by ./deepcontact/feature.yaml, using input
     files under ./tmp_feature. Output the feature files, in python pickle
     format, to ./tmp_pickle/feature.pkl
+
+./deepcontact/feature_gen.py ./tmp_feature ./tmp_pickle/feature.pkl
+    Generate features, using input files under ./tmp_feature. Output the
+    feature files, in python pickle format, to ./tmp_pickle/feature.pkl.
+    Use the default configuration file at ./deepcontact/feature.yaml 
 '''
 #################################################################################
 #     File Name           :     feature_gen.py
@@ -71,13 +76,15 @@ def get_protein_length_by_ccmpred(feature_dir):
     return length
 
 if __name__=="__main__":
-    if len(sys.argv)<=3:
+    if len(sys.argv)<=2:
         sys.stderr.write(docstring)
         exit()
+
     #arg = parse_args()
-    feature_config = sys.argv[1]
-    feature_dir = sys.argv[2]
-    output_filename = sys.argv[3]
+    feature_dir = sys.argv[-2]
+    output_filename = sys.argv[-1]
+    feature_config = sys.argv[1] if len(sys.argv)==4 else os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),"feature.yaml")
 
     feature_set, global_setting = load_config(feature_config)
     max_len = global_setting['max_len']
