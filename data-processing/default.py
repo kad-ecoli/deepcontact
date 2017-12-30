@@ -117,9 +117,9 @@ hhmake=dict(
 def set_HHLIB(config):
     ''' set HHLIB environment variable according to config["hhmake"]["command"]
     '''
-    HHLIB=os.path.basename(os.path.dirname(os.path.dirname(
-        config["hhmake"]["command"])))
+    HHLIB=os.path.dirname(os.path.dirname(config["hhmake"]["command"]))
     os.environ["HHLIB"]=HHLIB
+    sys.stdout.write("HHLIB=%s\n"%(os.environ["HHLIB"]))
     return HHLIB
 
 def parse(default_config, input_sequence, output_dir):
