@@ -6,9 +6,9 @@ path:
 # run hhblits and reformat output to aln file
 # see hhblits_runner.py
 hhblits:
-        command: hhblits
-        uniprot_db: /data/work/yang/Qing/databases/data/uniprot20_2016_02/uniprot20_2016_02
-        n_threads: 20
+        command: /nfs/amino-home/zcx/Projects/EVfold/ext/deepcontact/hhsuite-2.0.16-linux-x86_64/bin/hhblits
+        uniprot_db: /nfs/amino-home/zcx/Projects/EVfold/ext/deepcontact/uniprot20_2016_02/uniprot20_2016_02
+        n_threads: 1
         n_iters: 3
         e_value: 0.001
         maxfilt: 500000
@@ -19,65 +19,65 @@ hhblits:
 # run jackhmmer
 # see jackhmmer_runner.py
 jackhmmer:
-        command: /data/work/yang/Qing/software/hmmer-3.1b2/bin/jackhmmer
-        uniref_db: /data/work/yang/Qing/databases/data/new_uniref/uniref100.fasta
-        n_threads: 20
+        command: /nfs/amino-home/zcx/Projects/EVfold/ext/deepcontact/hmmer/binaries/jackhmmer
+        uniref_db: /scratch/aminoproject_fluxoe/zcx/uniref90
+        n_threads: 1
         inc_E: 10.0
         n_iter: 3
 
 # run hhfilter after jackhmmer
 # see jackhmmer_runner.py
 hhfilter:
-        command: hhfilter
+        command: /nfs/amino-home/zcx/Projects/EVfold/ext/deepcontact/hhsuite-2.0.16-linux-x86_64/bin/hhfilter
 
 # run ccmpred
 # see ccmpred_runner.py
 ccmpred:
-        command: /data/work/yang/Qing/software/CCMpred/bin/ccmpred
-        n_threads: 0
+        command: /nfs/amino-home/zcx/Projects/EVfold/ext/deepcontact/bin/ccmpred
+        n_threads: 1
         # optional:
-        cuda_dev: 6   # (do not include if use default cuda device)
+        #cuda_dev: 6   # (do not include if use default cuda device)
 
 # run freecontact in evfold mode
 # see freecontact_runner.py
 freecontact:
-        command: freecontact
-        n_threads: 20
+        command: /nfs/amino-home/zcx/Projects/EVfold/ext/deepcontact/bin/freecontact
+        n_threads: 1
 
 # run alnstats
 # see alnstats_runner.py
 alnstats:
-        command: /data/work/yang/Qing/software/metapsicov/bin/alnstats
-        n_processes: 20
+        command: /nfs/amino-home/zcx/Projects/EVfold/ext/deepcontact/metapsicov/bin/alnstats
+        n_processes: 1
 
 # run blastpgp
 # see ss_runner.py
 blast:
-        command: /data/work/yang/Qing/software/blast-2.2.26/bin/blastpgp
-        n_processes: 4
-        n_threads: 6
+        command: /nfs/amino-library/blast/bin/blastpgp
+        n_processes: 1
+        n_threads: 1
         n_iters: 3
         e_value: 0.001
-        database: nr
+        database: /nfs/amino-library/uniref90/uniref90.fasta
 
 # run makemat
 # see ss_runner.py
 makemat:
-        command: /data/work/yang/Qing/software/blast-2.2.26/bin/makemat
-        n_processes: 24
+        command: /nfs/amino-library/blast/bin/makemat
+        n_processes: 1
         
 # run psipred
 # see ss_runner.py
 psipred:
-        command: /data/work/yang/Qing/software/psipred/bin/psipred
-        data: /data/work/yang/Qing/software/psipred/data
-        n_processes: 24
+        command: /nfs/amino-home/zcx/Projects/EVfold/ext/deepcontact/psipred/bin/psipred
+        data: /nfs/amino-home/zcx/Projects/EVfold/ext/deepcontact/psipred/data
+        n_processes: 1
 
 # run psipred_pass2
 # see ss_runner.py
 psipred_pass2:
-        command: /data/work/yang/Qing/software/psipred/bin/psipass2
-        n_processes: 24
+        command: /nfs/amino-home/zcx/Projects/EVfold/ext/deepcontact/psipred/bin/psipass2
+        n_processes: 1
         n_iters: 1
         DCA: 1.0
         DCB: 1.0
@@ -85,12 +85,12 @@ psipred_pass2:
 # run solvpred
 # see ss_runner.py
 solvpred:
-        command: /data/work/yang/Qing/software/metapsicov/bin/solvpred
-        data: /data/work/yang/Qing/software/metapsicov/data/weights_solv.dat
-        n_processes: 24
+        command: /nfs/amino-home/zcx/Projects/EVfold/ext/deepcontact/metapsicov/bin/solvpred
+        data: /nfs/amino-home/zcx/Projects/EVfold/ext/deepcontact/metapsicov/data/weights_solv.dat
+        n_processes: 1
 
 # run hhmake (includes neff)
 # see hhmake_runner
 hhmake:
-        command: hhmake
-        n_processes: 20
+        command: /nfs/amino-home/zcx/Projects/EVfold/ext/deepcontact/hhsuite-2.0.16-linux-x86_64/bin/hhmake
+        n_processes: 1
