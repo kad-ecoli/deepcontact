@@ -8,11 +8,11 @@
   - CCMPred
   - FreeContact 1.0.21
   - MetaPsicov 1.02
-  - Blast 2.2.6
+  - Blast legacy 2.2.26
   - Psipred 4.0
-2. We need set environment variable `export BLASTDB=/data/work/yang/Qing/databases/data/nr`
-3. Modify default.yaml with path to the above programs
-4. Install python dependencies with
+2. Modify default_config dictionary in data-processing/default.py
+   with path to the above programs
+3. (optional) Install python dependencies with
 
  ```bash
  conda env create -f environment.yml
@@ -20,11 +20,15 @@
  pip install --upgrade https://github.com/Lasagne/Lasagne/archive/master.zip
  ```
 
+ (alternatively, see DeepCov document for installing theano & lasagne)
+
 ## Usage Example
 
 ```bash
-python data-processing/run_pipeline.py default.yaml test.fasta ./tmp_feature
-python deepcontact/feature_gen.py ./deepcontact/feature.yaml ./tmp_feature ./tmp_pickle/feature.pkl
-python deepcontact/main.py ./tmp_pickle/feature.pkl ./tmp_output/prediction.pkl
+data-processing/run_pipeline.py test.fasta ./tmp_feature
+deepcontact/feature_gen.py ./tmp_feature ./tmp_pickle/feature.pkl
+deepcontact/main.py ./tmp_pickle/feature.pkl ./tmp_output/prediction.deepcontact
 ```
 
+Here, ./tmp_output/prediction.deepcontact is final contact map in 
+gremlin/ccmpred format.
