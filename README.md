@@ -12,7 +12,7 @@
   - Psipred 4.0
 2. Modify default_config dictionary in data-processing/default.py
    with path to the above programs
-3. (optional) Install python dependencies with
+3. Install python dependencies with
 
  ```bash
  conda env create -f environment.yml
@@ -26,7 +26,7 @@
 
 ```bash
 data-processing/run_pipeline.py test.fasta ./tmp_feature
-deepcontact/feature_gen.py ./tmp_feature ./tmp_pickle/feature.pkl
+deepcontact/feature_gen.py test.fasta ./tmp_feature ./tmp_pickle/feature.pkl
 deepcontact/main.py ./tmp_pickle/feature.pkl ./tmp_output/prediction.deepcontact
 ```
 
