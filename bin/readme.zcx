@@ -1,0 +1,25 @@
+#### executables from hhsuite 2.0.16 ####
+hhblits
+hhfilter
+hhmake
+
+#### executables from hmmer 3.1b2 ####
+jackhmmer
+
+#### executables from ccmpred 0.3.2 ####
+ccmpred
+
+#### executables freecontact 1.0.21 ####
+freecontact
+
+#### executables from metapsicov 1.04 ####
+alnstats
+solvpred
+
+#### executables from legacy blast 2.2.26 ####
+blastpgp
+makemat
+        
+#### executables from psipred 4.0 ####
+psipred
+psipass2
