@@ -16,11 +16,13 @@
 2. In the "default_config" dictionary in data-processing/default.py,
    update the following variables to point to respective paths:
 
-   uniprot_db - hhsuite's "uniprot20_2016_02" or "uniclust30"
-   uniref_db  - (optional) FASTA format uniref90 or uniref100
+   uniprot_db - hhsuite's "uniprot20_2016_02" or "uniclust30"  
+   
+   uniref_db  - (optional) FASTA format uniref90 or uniref100  
+   
    database   - uniref90 in blast's formatdb/makeblastdb format. This is
                 used for secondary structure and solvent accessibility
-		prediction, and does not need to be most recent version.
+                prediction, and does not need to be most recent version.
 
    By default, deepcontact uses hhblits + uniprot_db. You can optionally
    switch to use jackhmmer + uniref_db by changing
