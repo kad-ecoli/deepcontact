@@ -3,7 +3,7 @@ import os,sys
 rootdir=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 default_config=dict(
-gen_feature_with_jackhmmer=False, # if Yes, jackhmmer_result will be used to generate feature
+gen_feature_with_jackhmmer=False, # if True, jackhmmer_result will be used to generate feature
 
 path=dict(
     #output_base="/data/work/qing/DeepContact/test",
