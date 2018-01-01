@@ -12,7 +12,7 @@ docstring='''
 #     File Name           :     main.py
 #     Created By          :     yang
 #     Creation Date       :     [2017-11-15 13:05]
-#     Last Modified       :     [2017-11-16 02:18]
+#     Last Modified       :     [2018-01-01 10:09]
 #     Description         :      
 #################################################################################
 from model import Model
@@ -26,7 +26,8 @@ def load_model(output_layer, model_file = "./deepcontact/models/model.npz"):
     param_values = list(param_values[0])
     lasagne.layers.set_all_param_values(output_layer, param_values)
 
-def main(feature_2d = None, feature_1d = None, output_filename = None, feature_pickle_filename = None):
+def main(feature_2d = None, feature_1d = None, protein_length = None,
+    output_filename = None, feature_pickle_filename = None):
     if feature_2d is None and feature_1d is None:
         with open(feature_pickle_filename, "rb") as fin:
             feature2d_value, feature1d_value, protein_length = cPickle.load(fin)

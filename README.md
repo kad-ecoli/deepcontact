@@ -53,9 +53,7 @@
 
 ```bash
 data-processing/run_pipeline.py test.fasta ./tmp_feature
-deepcontact/feature_gen.py test.fasta ./tmp_feature ./tmp_pickle/feature.pkl
-deepcontact/main.py ./tmp_pickle/feature.pkl ./tmp_output/prediction.deepcontact
+deepcontact/make_pred.py test.fasta ./tmp_feature test.deepcontact
 ```
 
-Here, ./tmp_output/prediction.deepcontact is final contact map in 
-gremlin/ccmpred format.
+Here, test.deepcontact is final contact map in gremlin/ccmpred format.

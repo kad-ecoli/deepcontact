@@ -9,15 +9,16 @@ docstring='''
 #     File Name           :     feature_gen.py
 #     Created By          :     yang
 #     Creation Date       :     [2017-11-15 16:59]
-#     Last Modified       :     [2017-11-16 02:11]
+#     Last Modified       :     [2018-01-01 10:09]
 #     Description         :      
 #################################################################################
-import yaml, h5py, os, sys
+import os, sys
 from feature_parser import *
 import cPickle
 DTYPE = 'float32'
 
 def load_config(filename):
+    import yaml
     with open(filename) as fin:
         data = yaml.load(fin)
         global_setting = data['general']
