@@ -11,9 +11,9 @@ path=dict(
 
 # run hhblits and reformat output to aln file
 # see hhblits_runner.py
-hhblits=dict(
-    command=os.path.join(rootdir,"hhsuite-2.0.16-linux-x86_64/bin/hhblits"),
-    uniprot_db=os.path.join(rootdir,"uniprot20_2016_02/uniprot20_2016_02"),
+hhblits=dict( # from hhsuite 2.0.16
+    command=os.path.join(rootdir,"bin/hhblits"),
+    uniprot_db="/nfs/amino-library/local/hhsuite/uniprot20_2016_02/uniprot20_2016_02",
     n_threads=1,
     n_iters=3,
     e_value=0.001,
@@ -25,9 +25,9 @@ hhblits=dict(
 
 # run jackhmmer
 # see jackhmmer_runner.py
-jackhmmer=dict(
-    command=os.path.join(rootdir,"hmmer/binaries/jackhmmer"),
-    uniref_db=os.path.join(rootdir,"uniref90/uniref90.fasta"),
+jackhmmer=dict( # from hmmer 3.1b2
+    command=os.path.join(rootdir,"bin/jackhmmer"),
+    uniref_db="/scratch/aminoproject_fluxoe/zcx/uniref90/uniref90.fasta",
     n_threads=1,
     inc_E=10.0,
     n_iter=3,
@@ -35,13 +35,13 @@ jackhmmer=dict(
 
 # run hhfilter after jackhmmer
 # see jackhmmer_runner.py
-hhfilter=dict(
-    command=os.path.join(rootdir,"hhsuite-2.0.16-linux-x86_64/bin/hhfilter"),
+hhfilter=dict( # from hhsuite 2.0.16
+    command=os.path.join(rootdir,"bin/hhfilter"),
     ),
 
 # run ccmpred
 # see ccmpred_runner.py
-ccmpred=dict(
+ccmpred=dict( # from ccmpred 0.3.2
     command=os.path.join(rootdir,"bin/ccmpred"),
     n_threads=1,
     # optional:
@@ -50,48 +50,49 @@ ccmpred=dict(
 
 # run freecontact in evfold mode
 # see freecontact_runner.py
-freecontact=dict(
+freecontact=dict( # from freecontact 1.0.21
     command=os.path.join(rootdir,"bin/freecontact"),
     n_threads=1,
     ),
 
 # run alnstats
 # see alnstats_runner.py
-alnstats=dict(
-    command=os.path.join(rootdir,"metapsicov/bin/alnstats"),
+alnstats=dict( # from metapsicov 1.04
+    command=os.path.join(rootdir,"bin/alnstats"),
     n_processes=1,
     ),
 
 # run blastpgp
 # see ss_runner.py
-blast=dict(
-    command=os.path.join(rootdir,"blast/bin/blastpgp"),
+blast=dict( # from legacy blast 2.2.26
+    command=os.path.join(rootdir,"bin/blastpgp"),
     n_processes=1,
     n_threads=1,
     n_iters=3,
     e_value=0.001,
+    # this database must be in blast's formatdb/makeblastdb format
     database="/nfs/amino-library/uniref90/uniref90.fasta",
     ),
 
 # run makemat
 # see ss_runner.py
-makemat=dict(
-    command=os.path.join(rootdir,"blast/bin/makemat"),
+makemat=dict( # from legacy blast 2.2.26
+    command=os.path.join(rootdir,"bin/makemat"),
     n_processes=1,
     ),
         
 # run psipred
 # see ss_runner.py
-psipred=dict(
-    command=os.path.join(rootdir,"psipred/bin/psipred"),
-    data=os.path.join(rootdir,"psipred/data"),
+psipred=dict( # from psipred4.0
+    command=os.path.join(rootdir,"bin/psipred"),
+    data=os.path.join(rootdir,"data"),
     n_processes=1,
     ),
 
 # run psipred_pass2
 # see ss_runner.py
-psipred_pass2=dict(
-    command=os.path.join(rootdir,"psipred/bin/psipass2"),
+psipred_pass2=dict( # from psipred4.0
+    command=os.path.join(rootdir,"bin/psipass2"),
     n_processes=1,
     n_iters=1,
     DCA=1.0,
@@ -100,16 +101,16 @@ psipred_pass2=dict(
 
 # run solvpred
 # see ss_runner.py
-solvpred=dict(
-    command=os.path.join(rootdir,"metapsicov/bin/solvpred"),
-    data=os.path.join(rootdir,"metapsicov/data/weights_solv.dat"),
+solvpred=dict( # from metapsicov 1.04
+    command=os.path.join(rootdir,"bin/solvpred"),
+    data=os.path.join(rootdir,"data/weights_solv.dat"),
     n_processes=1,
     ),
 
 # run hhmake (includes neff)
 # see hhmake_runner
-hhmake=dict(
-    command=os.path.join(rootdir,"hhsuite-2.0.16-linux-x86_64/bin/hhmake"),
+hhmake=dict( # from hhsuite 2.0.16
+    command=os.path.join(rootdir,"bin/hhmake"),
     n_processes=1,
     ),
 )
