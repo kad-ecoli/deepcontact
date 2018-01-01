@@ -38,8 +38,8 @@
    ```
 
 3. deepcontact uses the same python environment as DeepCov. Please ignore
-   this section if DeepCov (https://github.com/psipred/DeepCov) has already
-   been installed and configured. Otherwise, install python dependencies with
+   this section if DeepCov has already been installed and configured. 
+   Otherwise, install python dependencies with
 
  ```bash
  conda env create -f environment.yml
