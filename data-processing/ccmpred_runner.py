@@ -12,8 +12,14 @@ import os
 class CCMPredRunner:
     def __init__(self, config):
         self.config = config
+        self.output_file = os.path.join(config['path']['output'], 
+            config['id'] + '.ccmpred')
 
-    def run(self):
+    def run(self, force=False):
+        if util.getsize(self.output_file) and force==False:
+            print self.output_file,"exists. skip CCMPred"
+            return
+
         print "-" * 60
         print "Running CCMPred"
         self._run()
@@ -25,7 +31,7 @@ class CCMPredRunner:
         id = self.config['id']
 
         aln_file = os.path.join(self.config['path']['output'], id + '.aln')
-        output_file = os.path.join(self.config['path']['output'], id + '.ccmpred')
+        output_file = self.output_file
 
         if self.config['ccmpred']['n_threads'] == 0:
             if 'cuda_dev' in self.config['ccmpred']:

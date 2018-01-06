@@ -22,3 +22,10 @@ def run_command(args, log_file=None):
 def make_dir_if_not_exist(directory):
     if not os.path.exists(directory):
         os.makedirs(directory)
+
+def getsize(path):
+    ''' return file size if file exists '''
+    if not os.path.isfile(path):
+        return 0
+    else:
+        return os.path.getsize(path)

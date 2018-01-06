@@ -14,8 +14,14 @@ import string
 class HHBlitsRunner:
     def __init__(self, config):
         self.config = config
+        self.output_file = os.path.join(config['path']['output'], 
+            config['id'] + '.aln')
 
-    def run(self):
+    def run(self, force=False):
+        if util.getsize(self.output_file) and force==False:
+            print self.output_file,"exists. skip HHBlits"
+            return
+
         print "-" * 60
         print "Running HHBlits"
         self._run()
@@ -45,7 +51,7 @@ class HHBlitsRunner:
     def save_msa(self):
         id = self.config['id']
         a3m_file = os.path.join(self.config['path']['output'], id + '.a3m')
-        aln_file = os.path.join(self.config['path']['output'], id + '.aln')
+        aln_file = self.output_file
         with open(a3m_file, 'r') as a3m_f, open(aln_file, 'w') as aln_f:
             for line in a3m_f:
                 if not line.startswith('>'):

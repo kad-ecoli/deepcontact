@@ -29,6 +29,42 @@ import hhmake_runner
 import util_zcx as util
 import default
 
+def run_pipeline(config, force=False):
+    ''' generate input data files.
+    force - whether to overwrite existing files
+            False: (default) reuse existing file whenever possible
+            True: overwriting existing file
+    '''
+    default.set_HHLIB(config)
+
+    print "=" * 60
+    print "Running Pipeline with the following configuration"
+    print config
+
+    util.make_dir_if_not_exist(config['path']['output'])
+
+    if config["gen_feature_with_jackhmmer"]:
+        r = jackhmmer_runner.Jackhmmer_Runner(config)
+    else:
+        r = hhblits_runner.HHBlitsRunner(config)
+    r.run(force)
+
+    r = ccmpred_runner.CCMPredRunner(config)
+    r.run(force)
+
+    r = freecontact_runner.FreeContactRunner(config)
+    r.run(force)
+
+    r = alnstats_runner.AlnstatsRunner(config)
+    r.run(force)
+
+    r = ss_runner.SSRunner(config)
+    r.run(force)
+
+    r = hhmake_runner.HHMakeRunner(config)
+    r.run(force)
+    return
+
 if __name__ == '__main__':
     if len(sys.argv)<3:
         sys.stderr.write(docstring)
@@ -44,32 +80,4 @@ if __name__ == '__main__':
     else:
         config = default.parse(default.default_config, input_sequence, output_dir)
 
-    default.set_HHLIB(config)
-
-    print "=" * 60
-    print "Running Pipeline with the following configuration"
-    print config
-
-    util.make_dir_if_not_exist(config['path']['output'])
-
-    if config["gen_feature_with_jackhmmer"]:
-        r = jackhmmer_runner.Jackhmmer_Runner(config)
-        r.run()
-    else:
-        r = hhblits_runner.HHBlitsRunner(config)
-        r.run()
-
-    r = ccmpred_runner.CCMPredRunner(config)
-    r.run()
-
-    r = freecontact_runner.FreeContactRunner(config)
-    r.run()
-
-    r = alnstats_runner.AlnstatsRunner(config)
-    r.run()
-
-    r = ss_runner.SSRunner(config)
-    r.run()
-
-    r = hhmake_runner.HHMakeRunner(config)
-    r.run()
+    run_pipeline(config, force=False)

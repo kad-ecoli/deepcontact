@@ -12,8 +12,18 @@ import os
 class AlnstatsRunner:
     def __init__(self, config):
         self.config = config
+        self.colstats_file = os.path.join(config['path']['output'], 
+            config['id'] + '.colstats')
+        self.pairstat_file = os.path.join(self.config['path']['output'],
+            config['id'] + '.pairstats')
 
-    def run(self):
+    def run(self, force=False):
+        if util.getsize(self.colstats_file) and \
+           util.getsize(self.pairstat_file) and force==False:
+            print "%s and %s exists. skip Alnstats"%(
+                self.colstats_file,self.pairstat_file)
+            return
+
         print "-" * 60
         print "Running Alnstats"
         self._run()
@@ -23,8 +33,8 @@ class AlnstatsRunner:
         id = self.config['id']
 
         aln_file = os.path.join(self.config['path']['output'], id + '.aln')
-        colstats_file = os.path.join(self.config['path']['output'], id + '.colstats')
-        pairstat_file = os.path.join(self.config['path']['output'], id + '.pairstats')
+        colstats_file = self.colstats_file
+        pairstat_file = self.pairstat_file
 
         args = [self.config['alnstats']['command'],
                 aln_file,

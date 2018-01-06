@@ -12,17 +12,33 @@ import shutil
 class SSRunner:
     def __init__(self, config):
         self.config = config
+        self.ss2_file = os.path.join(config['path']['output'], 
+            config['id'] + '.ss2')
+        self.solv_file = os.path.join(config['path']['output'], 
+            config['id'] + '.solv')
+        self.matrix_file = os.path.join(config['path']['output'], 
+            config['id'] + '.mtx')
 
-    def run(self):
-        self.run_blast()
-        self.run_makemat()
+    def run(self, force=False):
+        if util.getsize(self.ss2_file) and \
+           util.getsize(self.solv_file) and force==False:
+            print "%s and %s exists. skip psipred and solvpred"%(
+                self.ss2_file, self.solv_file)
+            return
+
+        if util.getsize(self.matrix_file) and force==False:
+            print self.matrix_file,"exists. skip PSI-BLAST (blastpgp)"
+        else:
+            self.run_blast()
+            self.run_makemat()
+
         self.run_psipred()
         self.run_psipred_pass2()
         self.run_solvpred()
 
     def run_blast(self):
         print "-" * 60
-        print "Running Blast"
+        print "Running PSI-BLAST (blastpgp)"
 
         id = self.config['id']
 
@@ -76,7 +92,7 @@ class SSRunner:
 
         fasta_file = self.config["path"]["input"]
 
-        matrix_file = os.path.join(self.config['path']['output'], id + '.mtx')
+        matrix_file = self.matrix_file
         ss_file = os.path.join(self.config['path']['output'], id + '.ss')
 
         args = [self.config['psipred']['command'],
@@ -94,7 +110,7 @@ class SSRunner:
         id = self.config['id']
 
         ss_file = os.path.join(self.config['path']['output'], id + '.ss')
-        ss2_file = os.path.join(self.config['path']['output'], id + '.ss2')
+        ss2_file = self.ss2_file
         horiz_file = os.path.join(self.config['path']['output'], id + '.horiz')
 
         args = [self.config['psipred_pass2']['command'],
@@ -114,8 +130,8 @@ class SSRunner:
 
         id = self.config['id']
 
-        matrix_file = os.path.join(self.config['path']['output'], id + '.mtx')
-        solv_file = os.path.join(self.config['path']['output'], id + '.solv')
+        matrix_file = self.matrix_file
+        solv_file = self.solv_file
         args = [self.config['solvpred']['command'],
                 matrix_file,
                 self.config['solvpred']['data']]

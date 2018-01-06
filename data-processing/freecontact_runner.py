@@ -12,8 +12,14 @@ import os
 class FreeContactRunner:
     def __init__(self, config):
         self.config = config
+        self.output_file = os.path.join(config['path']['output'], 
+            config['id'] + '.evfold')
 
-    def run(self):
+    def run(self, force=False):
+        if util.getsize(self.output_file) and force==False:
+            print self.output_file,"exists. skip FreeContact"
+            return
+
         print "-" * 60
         print "Running FreeContact"
         self._run()
@@ -22,7 +28,7 @@ class FreeContactRunner:
     def _run(self):
         id = self.config['id']
         aln_file = os.path.join(self.config['path']['output'], id + '.aln')
-        output_file = os.path.join(self.config['path']['output'], id + '.evfold')
+        output_file = self.output_file
 
         args = [self.config['freecontact']['command'],
                 '-a', str(self.config['freecontact']['n_threads']),

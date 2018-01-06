@@ -13,8 +13,14 @@ import subprocess
 class Jackhmmer_Runner:
     def __init__(self, config):
         self.config = config
+        self.output_file = os.path.join(config['path']['output'], 
+            config['id'] + '.aln')
 
-    def run(self):
+    def run(self, force=False):
+        if util.getsize(self.output_file) and force==False:
+            print self.output_file,"exists. skip Jackhmmer"
+            return
+
         print "-" * 60
         print "Running Jackhmmer"
         self.run_jackhmmer()
@@ -159,7 +165,7 @@ class Jackhmmer_Runner:
         id = self.config['id']
 
         hhfiltered_file = os.path.join(self.config['path']['output'], id + '.filtered')
-        aln_file = os.path.join(self.config['path']['output'], id + '.aln')
+        aln_file = self.output_file
 
         with open(hhfiltered_file) as f_in:
             contents = f_in.read()
