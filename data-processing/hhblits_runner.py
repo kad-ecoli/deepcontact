@@ -39,6 +39,7 @@ class HHBlitsRunner:
                 '-i', input_file,
                 '-d', hh_config['uniprot_db'],
                 '-oa3m', output_file,
+                '-o', log_name,
                 '-n', str(hh_config['n_iters']),
                 '-maxfilt', str(hh_config['maxfilt']),
                 '-diff', str(hh_config['diff']),
@@ -46,7 +47,7 @@ class HHBlitsRunner:
                 '-cov', str(hh_config['cov']),
                 '-e', str(hh_config['e_value']),
                 '-cpu', str(hh_config['n_threads'])]
-        util.run_command(args, log_name)
+        util.run_command(args)
 
     def save_msa(self):
         id = self.config['id']
