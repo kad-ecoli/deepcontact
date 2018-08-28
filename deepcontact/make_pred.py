@@ -4,27 +4,53 @@ docstring='''
     Using input fasta sequence test.fasta and input files under
     ./tmp_feature, predict final contact map, and output it 
     (in gremlin/ccmpred format) to test.deepcontact
+
+option:
+    -only_ccmpred={false,true}
+        false: (default) use full set of feature
+        true:  only ccmpred features
 '''
 import os, sys
 from feature_parser import *
-from feature import feature_set,global_setting
+
+import feature
+import feature_only_ccmpred
 
 from feature_gen import generate_feature_2d,generate_feature_1d,DTYPE
 from feature_gen import generate_feature_0d,get_protein_length_by_ccmpred
-from main import load_model,main
+
+from main import main
+from predict_using_ccmpred import predict_using_ccmpred
 
 if __name__=="__main__":
     if len(sys.argv)<=3:
         sys.stderr.write(docstring)
         exit()
+    
+    only_ccmpred=False # use full feature set
 
-    input_sequence = sys.argv[1]
-    feature_dir = sys.argv[2]
-    output_filename = sys.argv[3]
+    argv=[]
+    for arg in sys.argv[1:]:
+        if arg.startswith("-only_ccmpred="):
+            only_ccmpred=(arg.lower()=="-only_ccmpred=true")
+        elif arg.startswith("-"):
+            sys.stderr.write("ERROR! No such option %s\n"%arg)
+            exit()
+        else:
+            argv.append(arg)
+    input_sequence  = argv[0]
+    feature_dir     = argv[1]
+    output_filename = argv[2]
 
     output_name = os.path.basename(input_sequence)
     if output_name.endswith('.fasta'):
         output_name = output_name[:-6]
+
+    global_setting    =feature.global_setting
+    feature_set       =feature.feature_set
+    if only_ccmpred:
+        global_setting=feature_only_ccmpred.global_setting
+        feature_set   =feature_only_ccmpred.feature_set
 
     protein_length = get_protein_length_by_ccmpred(feature_dir, output_name)
     global_setting['max_len']=max([protein_length,global_setting['max_len']])
@@ -57,6 +83,8 @@ if __name__=="__main__":
     
     combine_feature_list_2d = ['ccmpred', 'pairstats', 'evfold']
     combine_feature_list_1d = ['neff', 'ss2', 'solv', 'colstats', 'evfold_std', 'ccmpred_std']
+    combine_feature_list_2d = [x for x in combine_feature_list_2d if x in feature_map]
+    combine_feature_list_1d = [x for x in combine_feature_list_1d if x in feature_map]
     
     total_feature_length = 0
     for feature_name_2d in combine_feature_list_2d:
@@ -78,5 +106,13 @@ if __name__=="__main__":
         feature_1d[cnt:cnt + current_feature_value.shape[0], :] = current_feature_value[:,  :]
         cnt += current_feature_value.shape[0]
 
-    main(feature_2d = feature_2d, feature_1d = feature_1d,
-        protein_length = protein_length, output_filename = output_filename)
+    if only_ccmpred:
+        predict_using_ccmpred(
+            ccmpred_feature =feature_2d[0],
+            output_filename =output_filename)
+    else:
+        main(
+            feature_2d      = feature_2d, 
+            feature_1d      = feature_1d,
+            protein_length  = protein_length, 
+            output_filename = output_filename)
